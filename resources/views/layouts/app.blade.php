@@ -31,6 +31,20 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <!-- FOOTER -->
+            <footer class="bg-white border-t mt-10">
+                <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between text-sm text-gray-500">
+                    <div>
+                        © {{ date('Y') }} SuciTrack
+                    </div>
+
+                    <div>
+                        Built for System Analysis & Design Project
+                    </div>
+                </div>
+            </footer>
+
         </div>
     </body>
 </html>
