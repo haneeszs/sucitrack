@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\MenstrualRecord;
+use App\Models\QadaLog;
 use Illuminate\Http\Request;
 
 class MenstrualController extends Controller
@@ -11,9 +12,8 @@ class MenstrualController extends Controller
      */
     public function index()
     {
-        $menstrual_records = MenstrualRecord::all();
-       /* $menstrual_records = MenstrualRecord::where('user_id', auth()->id())
-            ->orderBy('started_at', 'desc'); */
+       // Fetch all records from the database sorted by newest first
+        $menstrual_records = MenstrualRecord::orderBy('start_datetime', 'desc')->get();
 
         return view('menstrual_records.index', compact('menstrual_records'));
     }
@@ -31,27 +31,21 @@ class MenstrualController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'started_at' => 'required|date|before_or_equal:now',
-            'zone_code'  => 'required|string|max:10',
-        ]);
+      $request->validate([
+        'start_datetime' => 'required|date',
+    ]);
 
-        //Ensure user cannot log parallel active cycles
-        $activeRecord = menstrual_records::where('user_id', auth()->id())
-            ->whereNull('ended_at')
-            ->first();
+    // Create and save the new record in your database
+    MenstrualRecord::create([
+        'start_datetime' => $request->start_datetime,
+        
+        // ✨ THE FIX: Tries to grab the logged-in user ID. 
+        // If you aren't logged in yet during development, it falls back to User ID 1!
+        'user_id'        => auth()->id() ?? 1, 
+    ]);
 
-        if ($activeRecord) {
-            return redirect()->back()->with('error', 'An ongoing menstrual cycle is already active.');
-        }
+        return redirect()->route('dashboard')->with('success', 'Period record logged successfully!');
 
-        menstrual_records::create([
-            'user_id'    => auth()->id(),
-            'started_at' => Carbon::parse($request->started_at),
-            'zone_code'  => $request->zone_code,
-        ]);
-
-        return redirect()->route('menstrual_records.index')->with('status', 'New cycle successfully logged.');
     }
 
     /**
@@ -131,7 +125,7 @@ class MenstrualController extends Controller
     }
 
     // ==========================================
-    // JAKIM API INTEGRATION & JURISPRUDENCE LOGIC
+    // JAKIM API INTEGRATION & LOGIC
     // ==========================================
 
     private function fetchJakimPrayerTimes($zone, $date)
@@ -189,4 +183,37 @@ class MenstrualController extends Controller
             'purified_at' => $endTime->toDayDateTimeString()
         ];
     }
+    public function dashboard()
+{
+    $userId = auth()->id();
+
+    // 1. Check if there is an active ongoing period
+    $activeRecord = MenstrualRecord::where('user_id', $userId)
+        ->whereNull('end_datetime')
+        ->first();
+
+    // 2. Calculate Days of Purity (Hari Suci) since the last period ended
+    $daysOfPurity = 0;
+    $isClean = true;
+
+    if ($activeRecord) {
+        $isClean = false;
+    } else {
+        $lastEndedRecord = MenstrualRecord::where('user_id', $userId)
+            ->whereNotNull('end_datetime')
+            ->orderBy('end_datetime', 'desc')
+            ->first();
+
+        if ($lastEndedRecord) {
+            // Count days between the last end_datetime and right now
+            $daysOfPurity = now()->diffInDays(\Carbon\Carbon::parse($lastEndedRecord->end_datetime));
+        }
+    }
+
+    // 3. Count unresolved Qada' prayers from the database logs
+    $pendingQadaCount = QadaLog::where('user_id', $userId)
+        ->where('is_completed', false);
+
+    return view('dashboard', compact('activeRecord', 'daysOfPurity', 'isClean', 'pendingQadaCount'));
+}
 }
