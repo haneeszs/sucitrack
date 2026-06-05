@@ -17,7 +17,7 @@ class MenstrualRecord extends Model
         'duration_days'
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
