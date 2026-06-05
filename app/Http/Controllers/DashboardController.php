@@ -19,7 +19,7 @@ class DashboardController extends Controller
         ->orderBy('start_datetime', 'desc')
         ->first();
 
-        // 3. Status Calculations (Placeholders for now, you can customize your logic later!)
+        // 3. Status Calculations 
         // If there is an active record and no end_datetime, they are currently in 'Haid' state
         $isClean = true; 
         if ($activeRecord && is_null($activeRecord->end_datetime)) {
@@ -35,9 +35,9 @@ class DashboardController extends Controller
         // Mock counter for pending Qada' prayers (Update with your table logic when ready!)
         $pendingQadaCount = 0; 
 
-        // 4. Pass ALL variables safely to the dashboard blade view
-        return view('dashboard', compact(
-            'isClean', 
+    
+        return view('menstrual_records.dashboard', compact (
+             'isClean', 
             'daysOfPurity', 
             'pendingQadaCount', 
             'activeRecord'

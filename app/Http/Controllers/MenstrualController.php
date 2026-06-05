@@ -12,7 +12,7 @@ class MenstrualController extends Controller
      */
     public function index()
     {
-       // Fetch all records from the database sorted by newest first
+       // Fetch all records from db sorted by newest first
         $menstrual_records = MenstrualRecord::orderBy('start_datetime', 'desc')->get();
 
         return view('menstrual_records.index', compact('menstrual_records'));

@@ -14,17 +14,17 @@
 </head>
 <body class="bg-[#FBFBFA] text-[#1F2937] antialiased min-h-screen">
 
-    <!-- Clean Top Navigation Bar matching image_a26940.png Layout -->
+    <!-- Top Navigation Bar -->
     <nav class="bg-white border-b border-stone-100 sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
             
-            <!-- Branding Logo -->
+            
             <div class="flex items-center space-x-2">
                 <div class="w-2.5 h-2.5 rounded-full bg-rose-400"></div>
                 <span class="font-bold text-base tracking-tight text-stone-800">SuciTrack</span>
             </div>
             
-            <!-- Navigation Links Wrapper -->
+            <!-- Navigation Links -->
             <div class="flex items-center space-x-6 text-sm font-medium">
                 <a href="{{ route('menstrual_records.index') }}" 
                    class="text-stone-400 hover:text-stone-800 transition px-1 py-5">
@@ -61,7 +61,7 @@
                     <span class="text-sm text-stone-400 font-medium">Days Clean</span>
                 </div>
                 @if($isClean)
-                    <p class="text-xs text-emerald-600 mt-2 bg-emerald-50 inline-block px-2 py-0.5 rounded-md font-medium">Active Worship State</p>
+                    <p class="text-xs text-emerald-600 mt-2 bg-emerald-50 inline-block px-2 py-0.5 rounded-md font-medium">Active Prayer State</p>
                 @else
                     <p class="text-xs text-rose-600 mt-2 bg-rose-50 inline-block px-2 py-0.5 rounded-md font-medium">In Menstrual State</p>
                 @endif
