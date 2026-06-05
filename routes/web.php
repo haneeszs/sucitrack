@@ -1,13 +1,11 @@
 <?php
 
-<< HEAD >>
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrayerController;
 use App\Http\Controllers\MenstrualController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
-<< HEAD >>
 /*
 |--------------------------------------------------------------------------
 | Web Routes
