@@ -2,6 +2,7 @@
 
 ## Group Members
 Alya Qistina Nadia binti Idris 231134
+
 *Leader
 * Setup Laravel project 
 * Configure GitHub repository
@@ -64,17 +65,29 @@ Navigating the complexities of Islamic rulings regarding prayer (Salah), fasting
 **2. Problem Statement & Objectives**
 
 2.1 Problem Statement
-Many contemporary period tracking applications are designed purely from a medical or lifestyle perspective. They lack the specific logical parameters required to determine Islamic purity, such as tracking the exact duration of a valid period, identifying irregular bleeding (Istihadah), or calculating missed prayers that require replacement (Qada'). This leaves users to manually calculate their end period time, often leading to confusion regarding their validation for acts of worship.
+Many contemporary period tracking applications are designed purely from a medical or lifestyle perspective. They lack the specific calculations required to determine Islamic purity, such as tracking the exact duration of a valid period, in active prayer state or not, or calculating missed prayers that require replacement (Qada'). This leaves users to manually calculate their end period time that often leading to confusion regarding their validation for acts of worship.
+
+Several limitations in existing applications :
+Existing applications are mainly developed by a non-muslim and  do not provide features related to qada’ prayer management for Muslim women.
+Users often experience confusion in determining which prayers need to be performed after menstruation ends at a certain time.
+Users may forget to perform obligatory prayers immediately after their menstruation period ends due to the absence of automatic notifications and reminders.
+The existing applications are mostly aimed to only track the women’s menstrual cycle as well as fertility to plan the process of fertilization. 
+
 
 2.2 Project Objectives 
 - Provide an interactive website for users to login, view, and manage their current and historical cycle data.
 - Eliminate manual calculation errors by automating the determination of purity days, valid menstruation limits, and transitional phases.
-- Support users in fulfilling their religious duties by implementing a structured system to track and clear Qada' (missed) prayers.
+- To allow users to record the start and end date and time of their menstrual period through the website.
+- To automatically calculate the duration of menstruation and estimate the user’s “hari suci” period based on the information entered by the user.
+- To integrate the website with the external JAKIM Prayer Time API in order to obtain accurate daily prayer times.
+- To help users identify and keep track of prayers that need to be replaced (qada’) after their menstruation period ends.
+- To predict the user’s next menstrual cycle based on previous records entered into the system.
+  
 
 **3. System Architecture & Features**
 
 3.1 Core Features
-The application is built around four primary functional pillars:
+The application is built around four core features:
 - Secure user authentication through registration and login systems to ensure user data protection and privacy.
 - Menstrual Records Management (CRUD) Create, Read, Update, and Delete capabilities allowing users to log start/end times.
 - A visual featuring current cycle status, days of purity, unresolved qada' prayers, zone selection based on systemic calculations.
